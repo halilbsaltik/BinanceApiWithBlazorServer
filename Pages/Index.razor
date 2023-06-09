@@ -1,0 +1,59 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<h1>Binance Dashboard</h1>
+
+<p>@serverTime</p>
+
+<button @onclick="SellSLP">Sell SLP</button>
+
+<p>@result</p>
+
+@using Binance.Spot;
+@using Binance.Common;
+@using Binance.Spot.Models;
+@code{
+    string serverTime = "Server Time Not Found";
+    string result ="";
+    protected override async Task OnInitializedAsync()
+    {
+        Market market = new Market();
+
+        serverTime = await market.CheckServerTime();
+
+
+    }
+    //https://github.com/binance/binance-connector-dotnet/tree/master/Examples/CSharp/Wallet
+
+    public async Task SellSLP()
+    {
+        HttpClient httpClient = new HttpClient();
+
+        string apiKey = "3SJRFuR7cXJ5TfMfF8fkH7nTC67RZxqO38XIgSHcJjzirtBAtdXiCsnAbHhghLDK";
+        string apiSecret = "VL8FvQmFcWNdSkp7wcjTXoREkv2Napw6tdl2Jw8sXz8WeD4XO8lIAKAVhGUoOWep";
+        var wallet = new Wallet(httpClient, apiKey: apiKey, apiSecret: apiSecret);
+        var spotAccountTrade = new SpotAccountTrade(httpClient, apiKey: apiKey, apiSecret: apiSecret);
+        var market = new Market(httpClient);
+        var fiat = new Fiat(httpClient, apiKey: apiKey, apiSecret: apiSecret);
+        var nft = new NFT(httpClient, apiKey: apiKey, apiSecret: apiSecret);
+
+        //result = await spotAccountTrade.NewOrder("SPLUSDT", Side.SELL, OrderType.MARKET, quantity: 4500);
+        //result = await spotAccountTrade.TestNewOrder("BNBUSDT", Side.SELL, OrderType.MARKET, quantity: 1);
+        //result = await spotAccountTrade.AccountTradeList("BNBUSDT");
+        //result = await spotAccountTrade.AllOrders("BNBUSDT");
+        //result = await spotAccountTrade.CurrentOpenOrders();
+        //result = await wallet.AccountStatus();
+        //result = await wallet.AccountApiTradingStatus();
+        //result = await wallet.DepositAddress("BNB");
+        //result = await market.CheckServerTime();
+        //result = await market.CompressedAggregateTradesList("BNBUSDT");
+        //result = await market.CurrentAveragePrice("BNBUSDT");
+        //result = await market.ExchangeInformation();
+        //result = await market.KlineCandlestickData("BNBUSDT", Interval.ONE_MINUTE);
+        //result = await market.OrderBook("BNBUSDT");
+        //result = await fiat.GetFiatPaymentsHistory(FiatPaymentTransactionType.BUY);
+        //result = await fiat.GetFiatDepositWithdrawHistory(FiatOrderTransactionType.DEPOSIT);
+        result = await nft.GetNftAsset();
+    }
+}

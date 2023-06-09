@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "opR8liSd6wCuoGzh/BG1c/FyQ7ISdE3SpMnMAYlBRDn6/rlKkQ1Txm7ddp1AVWx4b5duiJTAsNDCMAarBgr9eg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\AIBlack\\source\\repos\\BinanceApp\\BinanceApp\\BinanceApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\AIBlack\\.nuget\\packages\\binance.spot\\3.0.0\\binance.spot.3.0.0.nupkg.sha512",
+    "C:\\Users\\AIBlack\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,67 @@
+﻿@page "/fetchdata"
+@using Binance.Spot;
+@using Newtonsoft.Json.Linq;
+
+
+<PageTitle>Binance Web Socket</PageTitle>
+<p>@btcmoney Live Value : $ @btclivePrice</p>
+<p>@ethmoney Live Value : $ @ethlivePrice</p>
+
+@code {
+    public string btclivePrice = "";
+    public string btcmoney = "";
+    public string ethlivePrice = "";
+    public string ethmoney = "";
+    
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var websocket = new MarketDataWebSocket("ethusdt@aggTrade");
+        websocket.OnMessageReceived(
+            async (data) =>
+        {
+            Console.WriteLine(data);
+            JObject jsonData = JObject.Parse(data);
+            ethlivePrice = (string)jsonData["p"];
+            ethmoney = (string)jsonData["s"];
+            await InvokeAsync(StateHasChanged);
+            //return Task.CompletedTask;
+        }, CancellationToken.None);
+        await websocket.ConnectAsync(CancellationToken.None);
+
+        websocket = new MarketDataWebSocket("btcusdt@aggTrade");
+        websocket.OnMessageReceived(
+            async (data) =>
+        {
+            Console.WriteLine(data);
+            JObject jsonData = JObject.Parse(data);
+            btclivePrice = (string)jsonData["p"];
+            btcmoney = (string)jsonData["s"];
+            await InvokeAsync(StateHasChanged);
+            //return Task.CompletedTask;
+        }, CancellationToken.None);
+        await websocket.ConnectAsync(CancellationToken.None);
+
+
+        /*websocket = new WebSocketApi("wss://testnet.binance.vision/ws-api/v3", "apiKey", new BinanceHmac("apiSecret"));
+         * 
+        websocket.OnMessageReceived(
+            async (data) =>
+        {
+            Console.WriteLine(data);
+            await Task.CompletedTask;
+        }, CancellationToken.None);
+
+        await websocket.ConnectAsync(CancellationToken.None);
+
+        await websocket.AccountTrade.NewOrderAsync(symbol: "BNBUSDT", side: Models.Side.BUY, type: Models.OrderType.LIMIT, timeInForce: Models.TimeInForce.GTC, price: 300, quantity: 1, cancellationToken: CancellationToken.None);
+
+        await Task.Delay(5000);
+        Console.WriteLine("Disconnect with WebSocket API Server");
+        await websocket.DisconnectAsync(CancellationToken.None);*/
+        
+
+
+    }
+}
